@@ -1,0 +1,69 @@
+﻿@model IEnumerable<Exigence3000.MVC.Service.Tache>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.nom)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.date_debut)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.date_fin)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.date__debut_prevue)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Jalon.id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Responsable.nom)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.nom)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.date_debut)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.date_fin)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.date__debut_prevue)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Jalon.id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Responsable.nom)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,50 @@
+﻿@model Exigence3000.MVC.Service.Jalon
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Jalon</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.date_prevue)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date_prevue)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.date_livraison)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date_livraison)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Projet.nom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Projet.nom)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Responsable.nom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Responsable.nom)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

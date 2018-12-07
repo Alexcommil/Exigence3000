@@ -1,0 +1,80 @@
+﻿@model Exigence3000.MVC.Service.Tache
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Tache</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nom)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.date_debut)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date_debut)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.date_fin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date_fin)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.date__debut_prevue)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date__debut_prevue)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Jalon.id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Jalon.id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Responsable.nom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Responsable.nom)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

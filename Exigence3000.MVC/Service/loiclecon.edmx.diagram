@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b57c5610e16a4441a670c5739bb880b5" Name="Diagram1">
+        <EntityTypeShape EntityType="ESIMEDModel.Exigence" Width="1.5" PointX="5.25" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ESIMEDModel.Jalon" Width="1.5" PointX="5.25" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ESIMEDModel.Projet" Width="1.5" PointX="3" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ESIMEDModel.Responsable" Width="1.5" PointX="0.75" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ESIMEDModel.Tache" Width="1.5" PointX="7.5" PointY="4.125" IsExpanded="true" />
+        <AssociationConnector Association="ESIMEDModel.FK_Exigence_Projet" ManuallyRouted="false" />
+        <AssociationConnector Association="ESIMEDModel.FK_Jalon_Projet" ManuallyRouted="false" />
+        <AssociationConnector Association="ESIMEDModel.FK_Jalon_Responsable" ManuallyRouted="false" />
+        <AssociationConnector Association="ESIMEDModel.FK_Tache_Jalon" ManuallyRouted="false" />
+        <AssociationConnector Association="ESIMEDModel.FK_Projet_Responsable" ManuallyRouted="false" />
+        <AssociationConnector Association="ESIMEDModel.FK_Tache_Responsable" ManuallyRouted="false" />
+        <AssociationConnector Association="ESIMEDModel.ExigenceTache" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

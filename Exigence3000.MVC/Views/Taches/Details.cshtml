@@ -1,0 +1,74 @@
+﻿@model Exigence3000.MVC.Service.Tache
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Tache</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nom)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.date_debut)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date_debut)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.date_fin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date_fin)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.date__debut_prevue)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date__debut_prevue)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Jalon.id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Jalon.id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Responsable.nom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Responsable.nom)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

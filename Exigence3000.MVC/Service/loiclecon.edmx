@@ -1,0 +1,475 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ESIMEDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Exigence">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nom" Type="nvarchar" MaxLength="50" />
+          <Property Name="type" Type="bit" Nullable="false" />
+          <Property Name="description" Type="nvarchar" MaxLength="250" />
+          <Property Name="id_projet" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Erreurs détectées durant la génération :
+avertissement 6002: La table/vue 'ESIMED.dbo.ExigenceTache' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
+        <EntityType Name="ExigenceTache">
+          <Key>
+            <PropertyRef Name="id_exigence" />
+            <PropertyRef Name="id_tache" />
+          </Key>
+          <Property Name="id_exigence" Type="int" Nullable="false" />
+          <Property Name="id_tache" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Jalon">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_projet" Type="int" />
+          <Property Name="id_responsable" Type="int" />
+          <Property Name="date_prevue" Type="date" />
+          <Property Name="date_livraison" Type="date" />
+        </EntityType>
+        <EntityType Name="Projet">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nom" Type="nvarchar" MaxLength="50" />
+          <Property Name="id_responsable" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Responsable">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nom" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Tache">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nom" Type="nvarchar" MaxLength="50" />
+          <Property Name="description" Type="nvarchar" MaxLength="250" />
+          <Property Name="id_responsable" Type="int" Nullable="false" />
+          <Property Name="date_debut" Type="date" />
+          <Property Name="id_jalon" Type="int" />
+          <Property Name="date_fin" Type="date" />
+          <Property Name="date__debut_prevue" Type="date" />
+        </EntityType>
+        <Association Name="FK_Exigence_Projet">
+          <End Role="Projet" Type="Self.Projet" Multiplicity="1" />
+          <End Role="Exigence" Type="Self.Exigence" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projet">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Exigence">
+              <PropertyRef Name="id_projet" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExigenceTache_Exigence">
+          <End Role="Exigence" Type="Self.Exigence" Multiplicity="1" />
+          <End Role="ExigenceTache" Type="Self.ExigenceTache" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Exigence">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ExigenceTache">
+              <PropertyRef Name="id_exigence" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExigenceTache_Tache">
+          <End Role="Tache" Type="Self.Tache" Multiplicity="1" />
+          <End Role="ExigenceTache" Type="Self.ExigenceTache" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tache">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ExigenceTache">
+              <PropertyRef Name="id_tache" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Jalon_Projet">
+          <End Role="Projet" Type="Self.Projet" Multiplicity="0..1" />
+          <End Role="Jalon" Type="Self.Jalon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projet">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Jalon">
+              <PropertyRef Name="id_projet" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Jalon_Responsable">
+          <End Role="Responsable" Type="Self.Responsable" Multiplicity="0..1" />
+          <End Role="Jalon" Type="Self.Jalon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Responsable">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Jalon">
+              <PropertyRef Name="id_responsable" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Projet_Responsable">
+          <End Role="Responsable" Type="Self.Responsable" Multiplicity="1" />
+          <End Role="Projet" Type="Self.Projet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Responsable">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Projet">
+              <PropertyRef Name="id_responsable" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tache_Jalon">
+          <End Role="Jalon" Type="Self.Jalon" Multiplicity="0..1" />
+          <End Role="Tache" Type="Self.Tache" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jalon">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Tache">
+              <PropertyRef Name="id_jalon" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tache_Responsable">
+          <End Role="Responsable" Type="Self.Responsable" Multiplicity="1" />
+          <End Role="Tache" Type="Self.Tache" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Responsable">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Tache">
+              <PropertyRef Name="id_responsable" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ESIMEDModelStoreContainer">
+          <EntitySet Name="Exigence" EntityType="Self.Exigence" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Jalon" EntityType="Self.Jalon" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Projet" EntityType="Self.Projet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Responsable" EntityType="Self.Responsable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tache" EntityType="Self.Tache" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExigenceTache" EntityType="Self.ExigenceTache" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ExigenceTache].[id_exigence] AS [id_exigence], 
+    [ExigenceTache].[id_tache] AS [id_tache]
+    FROM [dbo].[ExigenceTache] AS [ExigenceTache]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Exigence_Projet" Association="Self.FK_Exigence_Projet">
+            <End Role="Projet" EntitySet="Projet" />
+            <End Role="Exigence" EntitySet="Exigence" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExigenceTache_Exigence" Association="Self.FK_ExigenceTache_Exigence">
+            <End Role="Exigence" EntitySet="Exigence" />
+            <End Role="ExigenceTache" EntitySet="ExigenceTache" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExigenceTache_Tache" Association="Self.FK_ExigenceTache_Tache">
+            <End Role="Tache" EntitySet="Tache" />
+            <End Role="ExigenceTache" EntitySet="ExigenceTache" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Jalon_Projet" Association="Self.FK_Jalon_Projet">
+            <End Role="Projet" EntitySet="Projet" />
+            <End Role="Jalon" EntitySet="Jalon" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Jalon_Responsable" Association="Self.FK_Jalon_Responsable">
+            <End Role="Responsable" EntitySet="Responsable" />
+            <End Role="Jalon" EntitySet="Jalon" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Projet_Responsable" Association="Self.FK_Projet_Responsable">
+            <End Role="Responsable" EntitySet="Responsable" />
+            <End Role="Projet" EntitySet="Projet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tache_Jalon" Association="Self.FK_Tache_Jalon">
+            <End Role="Jalon" EntitySet="Jalon" />
+            <End Role="Tache" EntitySet="Tache" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tache_Responsable" Association="Self.FK_Tache_Responsable">
+            <End Role="Responsable" EntitySet="Responsable" />
+            <End Role="Tache" EntitySet="Tache" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ESIMEDModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Exigence">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="type" Type="Boolean" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="id_projet" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Projet" Relationship="Self.FK_Exigence_Projet" FromRole="Exigence" ToRole="Projet" />
+          <NavigationProperty Name="Tache" Relationship="Self.ExigenceTache" FromRole="Exigence" ToRole="Tache" />
+        </EntityType>
+        <EntityType Name="Jalon">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_projet" Type="Int32" />
+          <Property Name="id_responsable" Type="Int32" />
+          <Property Name="date_prevue" Type="DateTime" Precision="0" />
+          <Property Name="date_livraison" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Projet" Relationship="Self.FK_Jalon_Projet" FromRole="Jalon" ToRole="Projet" />
+          <NavigationProperty Name="Responsable" Relationship="Self.FK_Jalon_Responsable" FromRole="Jalon" ToRole="Responsable" />
+          <NavigationProperty Name="Tache" Relationship="Self.FK_Tache_Jalon" FromRole="Jalon" ToRole="Tache" />
+        </EntityType>
+        <EntityType Name="Projet">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="id_responsable" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Exigence" Relationship="Self.FK_Exigence_Projet" FromRole="Projet" ToRole="Exigence" />
+          <NavigationProperty Name="Jalon" Relationship="Self.FK_Jalon_Projet" FromRole="Projet" ToRole="Jalon" />
+          <NavigationProperty Name="Responsable" Relationship="Self.FK_Projet_Responsable" FromRole="Projet" ToRole="Responsable" />
+        </EntityType>
+        <EntityType Name="Responsable">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Jalon" Relationship="Self.FK_Jalon_Responsable" FromRole="Responsable" ToRole="Jalon" />
+          <NavigationProperty Name="Projet" Relationship="Self.FK_Projet_Responsable" FromRole="Responsable" ToRole="Projet" />
+          <NavigationProperty Name="Tache" Relationship="Self.FK_Tache_Responsable" FromRole="Responsable" ToRole="Tache" />
+        </EntityType>
+        <EntityType Name="Tache">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="id_responsable" Type="Int32" Nullable="false" />
+          <Property Name="date_debut" Type="DateTime" Precision="0" />
+          <Property Name="id_jalon" Type="Int32" />
+          <Property Name="date_fin" Type="DateTime" Precision="0" />
+          <Property Name="date__debut_prevue" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Jalon" Relationship="Self.FK_Tache_Jalon" FromRole="Tache" ToRole="Jalon" />
+          <NavigationProperty Name="Responsable" Relationship="Self.FK_Tache_Responsable" FromRole="Tache" ToRole="Responsable" />
+          <NavigationProperty Name="Exigence" Relationship="Self.ExigenceTache" FromRole="Tache" ToRole="Exigence" />
+        </EntityType>
+        <Association Name="FK_Exigence_Projet">
+          <End Role="Projet" Type="Self.Projet" Multiplicity="1" />
+          <End Role="Exigence" Type="Self.Exigence" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projet">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Exigence">
+              <PropertyRef Name="id_projet" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Jalon_Projet">
+          <End Role="Projet" Type="Self.Projet" Multiplicity="0..1" />
+          <End Role="Jalon" Type="Self.Jalon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projet">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Jalon">
+              <PropertyRef Name="id_projet" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Jalon_Responsable">
+          <End Role="Responsable" Type="Self.Responsable" Multiplicity="0..1" />
+          <End Role="Jalon" Type="Self.Jalon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Responsable">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Jalon">
+              <PropertyRef Name="id_responsable" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tache_Jalon">
+          <End Role="Jalon" Type="Self.Jalon" Multiplicity="0..1" />
+          <End Role="Tache" Type="Self.Tache" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jalon">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Tache">
+              <PropertyRef Name="id_jalon" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Projet_Responsable">
+          <End Role="Responsable" Type="Self.Responsable" Multiplicity="1" />
+          <End Role="Projet" Type="Self.Projet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Responsable">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Projet">
+              <PropertyRef Name="id_responsable" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tache_Responsable">
+          <End Role="Responsable" Type="Self.Responsable" Multiplicity="1" />
+          <End Role="Tache" Type="Self.Tache" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Responsable">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Tache">
+              <PropertyRef Name="id_responsable" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ExigenceTache">
+          <End Role="Exigence" Type="Self.Exigence" Multiplicity="*" />
+          <End Role="Tache" Type="Self.Tache" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="tities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Exigence" EntityType="Self.Exigence" />
+          <EntitySet Name="Jalon" EntityType="Self.Jalon" />
+          <EntitySet Name="Projet" EntityType="Self.Projet" />
+          <EntitySet Name="Responsable" EntityType="Self.Responsable" />
+          <EntitySet Name="Tache" EntityType="Self.Tache" />
+          <AssociationSet Name="FK_Exigence_Projet" Association="Self.FK_Exigence_Projet">
+            <End Role="Projet" EntitySet="Projet" />
+            <End Role="Exigence" EntitySet="Exigence" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Jalon_Projet" Association="Self.FK_Jalon_Projet">
+            <End Role="Projet" EntitySet="Projet" />
+            <End Role="Jalon" EntitySet="Jalon" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Jalon_Responsable" Association="Self.FK_Jalon_Responsable">
+            <End Role="Responsable" EntitySet="Responsable" />
+            <End Role="Jalon" EntitySet="Jalon" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tache_Jalon" Association="Self.FK_Tache_Jalon">
+            <End Role="Jalon" EntitySet="Jalon" />
+            <End Role="Tache" EntitySet="Tache" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Projet_Responsable" Association="Self.FK_Projet_Responsable">
+            <End Role="Responsable" EntitySet="Responsable" />
+            <End Role="Projet" EntitySet="Projet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tache_Responsable" Association="Self.FK_Tache_Responsable">
+            <End Role="Responsable" EntitySet="Responsable" />
+            <End Role="Tache" EntitySet="Tache" />
+          </AssociationSet>
+          <AssociationSet Name="ExigenceTache" Association="Self.ExigenceTache">
+            <End Role="Exigence" EntitySet="Exigence" />
+            <End Role="Tache" EntitySet="Tache" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ESIMEDModelStoreContainer" CdmEntityContainer="tities">
+          <EntitySetMapping Name="Exigence">
+            <EntityTypeMapping TypeName="ESIMEDModel.Exigence">
+              <MappingFragment StoreEntitySet="Exigence">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="id_projet" ColumnName="id_projet" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Jalon">
+            <EntityTypeMapping TypeName="ESIMEDModel.Jalon">
+              <MappingFragment StoreEntitySet="Jalon">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_projet" ColumnName="id_projet" />
+                <ScalarProperty Name="id_responsable" ColumnName="id_responsable" />
+                <ScalarProperty Name="date_prevue" ColumnName="date_prevue" />
+                <ScalarProperty Name="date_livraison" ColumnName="date_livraison" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Projet">
+            <EntityTypeMapping TypeName="ESIMEDModel.Projet">
+              <MappingFragment StoreEntitySet="Projet">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="id_responsable" ColumnName="id_responsable" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Responsable">
+            <EntityTypeMapping TypeName="ESIMEDModel.Responsable">
+              <MappingFragment StoreEntitySet="Responsable">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tache">
+            <EntityTypeMapping TypeName="ESIMEDModel.Tache">
+              <MappingFragment StoreEntitySet="Tache">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="id_responsable" ColumnName="id_responsable" />
+                <ScalarProperty Name="date_debut" ColumnName="date_debut" />
+                <ScalarProperty Name="id_jalon" ColumnName="id_jalon" />
+                <ScalarProperty Name="date_fin" ColumnName="date_fin" />
+                <ScalarProperty Name="date__debut_prevue" ColumnName="date__debut_prevue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="ExigenceTache" TypeName="ESIMEDModel.ExigenceTache" StoreEntitySet="ExigenceTache">
+            <EndProperty Name="Exigence">
+              <ScalarProperty Name="id" ColumnName="id_exigence" />
+            </EndProperty>
+            <EndProperty Name="Tache">
+              <ScalarProperty Name="id" ColumnName="id_tache" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

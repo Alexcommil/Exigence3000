@@ -45,10 +45,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -147,11 +155,46 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ExigencesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\JalonsController.cs" />
+    <Compile Include="Controllers\ProjetsController.cs" />
+    <Compile Include="Controllers\ResponsablesController.cs" />
+    <Compile Include="Controllers\TachesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\Exigence.cs">
+      <DependentUpon>loiclecon.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Service\Jalon.cs">
+      <DependentUpon>loiclecon.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Service\loiclecon.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>loiclecon.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Service\loiclecon.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>loiclecon.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Service\loiclecon.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>loiclecon.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Service\Projet.cs">
+      <DependentUpon>loiclecon.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Service\Responsable.cs">
+      <DependentUpon>loiclecon.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Service\Tache.cs">
+      <DependentUpon>loiclecon.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -178,6 +221,16 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Service\loiclecon.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>loiclecon.edmx</DependentUpon>
+      <LastGenOutput>loiclecon.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Service\loiclecon.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>loiclecon.edmx</DependentUpon>
+      <LastGenOutput>loiclecon.cs</LastGenOutput>
+    </Content>
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -192,6 +245,38 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Projets\Create.cshtml" />
+    <Content Include="Views\Projets\Delete.cshtml" />
+    <Content Include="Views\Projets\Details.cshtml" />
+    <Content Include="Views\Projets\Edit.cshtml" />
+    <Content Include="Views\Projets\Index.cshtml" />
+    <Content Include="Views\Jalons\Create.cshtml" />
+    <Content Include="Views\Jalons\Delete.cshtml" />
+    <Content Include="Views\Jalons\Details.cshtml" />
+    <Content Include="Views\Jalons\Edit.cshtml" />
+    <Content Include="Views\Jalons\Index.cshtml" />
+    <Content Include="Views\Responsables\Create.cshtml" />
+    <Content Include="Views\Responsables\Delete.cshtml" />
+    <Content Include="Views\Responsables\Details.cshtml" />
+    <Content Include="Views\Responsables\Edit.cshtml" />
+    <Content Include="Views\Responsables\Index.cshtml" />
+    <Content Include="Views\Exigences\Create.cshtml" />
+    <Content Include="Views\Exigences\Delete.cshtml" />
+    <Content Include="Views\Exigences\Details.cshtml" />
+    <Content Include="Views\Exigences\Edit.cshtml" />
+    <Content Include="Views\Exigences\Index.cshtml" />
+    <Content Include="Views\Taches\Create.cshtml" />
+    <Content Include="Views\Taches\Delete.cshtml" />
+    <Content Include="Views\Taches\Details.cshtml" />
+    <Content Include="Views\Taches\Edit.cshtml" />
+    <Content Include="Views\Taches\Index.cshtml" />
+    <EntityDeploy Include="Service\loiclecon.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>loiclecon.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Service\loiclecon.edmx.diagram">
+      <DependentUpon>loiclecon.edmx</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -209,6 +294,9 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

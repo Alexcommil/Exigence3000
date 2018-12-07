@@ -1,0 +1,113 @@
+﻿@model Exigence3000.MVC.Service.Projet
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div class="container">
+    <div class="row">
+
+        <h4>Projet</h4>
+        <hr />
+        
+            <h2>
+                @Html.DisplayNameFor(model => model.nom)
+            </h2>
+
+            <h2>
+                @Html.DisplayFor(model => model.nom)
+            </h2>
+
+            <h2>
+                @Html.DisplayNameFor(model => model.Responsable.nom)
+            </h2>
+
+            <h2>
+                @Html.DisplayFor(model => model.Responsable.nom)
+            </h2>
+
+            @foreach (Exigence3000.MVC.Service.Jalon item in Model.Jalon)
+            {
+            <dl class="dl-horizontal">
+                <p>JALON</p>
+                @if (Exigence3000.MVC.Controllers.JalonsController.isComplete(item.id))
+                {
+                <p style="color:green">Terminé</p>}
+                @if (!Exigence3000.MVC.Controllers.JalonsController.isComplete(item.id))
+                {
+                <p style="color:red">En cour</p>}
+                <dt>
+                    @Html.DisplayNameFor(model => item.id)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => item.id)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => item.Responsable)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => item.Responsable)
+                </dd>
+                @foreach (Exigence3000.MVC.Service.Tache tache in item.Tache)
+                {
+                <div class="col-xs-3 btn-default">
+                    <p>TACHE</p>
+                    <dt>
+                        @Html.DisplayNameFor(model => tache.id)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => tache.id)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => tache.nom)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => tache.nom)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => tache.Responsable)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => tache.Responsable)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => tache.date__debut_prevue)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => tache.date__debut_prevue)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => tache.date_debut)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => tache.date_debut)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => tache.date_fin)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => tache.date_fin)
+                    </dd>
+                </div>
+
+                }
+            </dl>
+    }
+
+
+        </div>
+
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
